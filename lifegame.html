@@ -1,0 +1,309 @@
+
+<html>
+
+<head>
+    <style>
+        .cellrow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: nowrap;
+            background-color: black;
+        }
+
+        .cellrow > div {
+            background-color: #f1f1f1;
+            width: 75px;
+            height: 75px;
+            margin: 5px;
+            text-align: center;
+            line-height: 75px;
+            font-size: 30px;
+        }
+        .cellrow > div[alive]{background-color: #D9CB9E;}
+        .cellrow > div[dead]{background-color: #36175E;}
+
+    </style>
+</head>
+<body>
+<div class="body">
+    <div class="cellrow">
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+    </div>
+    <div class="cellrow">
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+    </div>
+    <div class="cellrow">
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+    </div>
+    <div class="cellrow">
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+    </div>
+    <div class="cellrow">
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+    </div>
+    <div class="cellrow">
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+    </div>
+    <div class="cellrow">
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+    </div>
+    <div class="cellrow">
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+    </div>
+    <div class="cellrow">
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+    </div>
+    <div class="cellrow">
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+    </div>
+
+
+</div>
+<script>
+    var isAlive = function(cell){
+        return cell.hasAttribute("alive");
+    }
+
+    var isDead = function(cell){
+        return cell.hasAttribute("dead");
+    }
+
+    var isEmpty = function(cell){
+        return !(isAlive(cell) && isDead(cell));
+    }
+
+    var hasStatus = function(cell, status){
+        if (status == ""){
+            return isEmpty(cell);
+        }
+        else if (status == "alive"){
+            return isAlive(cell);
+        }
+        else if (status == "dead"){
+            return isDead(cell);
+        }
+    }
+
+    var checkStatus = function(array, cell, status){
+        if(hasStatus(cell, status)){
+            array.push(cell);
+        }
+    }
+    var getNeighbours = function(cells, i, j, status){
+        var neighbours = [];
+        var leftInd = i-1;
+        var rightInd = i+1;
+        var topInd = j-1;
+        var bottomInd = j+1;
+        if (leftInd > 0){
+            var tmp = cells[leftInd];
+            if (topInd > 0){
+                checkStatus(neighbours, tmp[topInd], status);
+            }
+
+            checkStatus(neighbours, tmp[j], status);
+            if (bottomInd < tmp.length){
+                checkStatus(neighbours, tmp[bottomInd], status);
+            }
+        }
+        if (true){
+            var tmp = cells[i];
+            if (topInd > 0){
+                checkStatus(neighbours, tmp[topInd], status);
+            }
+
+            if (bottomInd < tmp.length){
+                checkStatus(neighbours, tmp[bottomInd], status);
+            }
+        }
+        if (rightInd < cells.length){
+            var tmp = cells[rightInd];
+            if (topInd > 0){
+                checkStatus(neighbours, tmp[topInd], status);
+            }
+            checkStatus(neighbours, tmp[j], status);
+            if (bottomInd < tmp.length){
+                checkStatus(neighbours, tmp[bottomInd], status);
+            }
+        }
+        return neighbours;
+    }
+    var countByStatus = function(cells, i, j, status){
+        var neighbours = getNeighbours(cells, i, j, status);
+
+        return neighbours.length;
+    }
+
+    var toAlive = function(cell){
+        if(isDead(cell)){
+            cell.removeAttribute("dead");
+        }
+        cell.setAttribute("alive", "");
+    }
+
+    var toDead = function(cell){
+        if(isAlive(cell)){
+            cell.removeAttribute("alive");
+        }
+        cell.setAttribute("dead", "");
+    }
+
+    var delay = function () {
+        var timeout = null;
+        document.body.onmouseover = function(event) {
+            // Set timeout to be a timer which will invoke callback after 1s
+            timeout = setTimeout(function(el) {toDead(el);}, 2000, event.target);
+        };
+
+        document.body.onmouseout = function(event) {
+            // Clear any timers set to timeout
+            clearTimeout(timeout);
+        }
+    };
+
+    var getCells = function(){
+        var cellrow = document.getElementsByClassName("cellrow");
+        var cells = [];
+        for(var i=0; i < cellrow.length; i++){
+            cells.push(cellrow[i].children);
+        }
+        return cells;
+    }
+
+    getCells().forEach(function(row){
+        console.log(row);
+        for(var k = 0; k < row.length; k++){
+            //row.forEach(function(elem){
+            delay();
+
+            row[k].addEventListener("click", (event) =>{
+                console.log("click");
+                console.log(event);
+                toAlive(event.target);
+            });
+        }
+    });
+
+    const interval = setInterval(() => {
+
+        var cells = getCells();
+        //console.log(cells);
+        cellsLoop: {
+            for(var k = 0; k < cells.length; k++){
+                for(var l = 0; l < cells[k].length; l++){
+                    var cell = cells[k][l];
+                    var cnt = countByStatus(cells, k, l, "alive");
+                    if(isEmpty(cell)){
+                        if (cnt == 3){
+                            if (!isAlive(cell)){
+                                console.log(cell.innerText + "to alive" );
+                                toAlive(cell);
+                                break cellsLoop;
+                            }
+                        }
+                    }
+                    if(cnt != 2 && cnt != 3){
+                        if (!isDead(cell)){
+                            console.log(cell.innerText + "to dead" );
+                            toDead(cell);
+                            break cellsLoop;
+                        }
+                    }
+                }
+            }
+        }
+    }, 3000);
+</script>
+</body>
+</html>
